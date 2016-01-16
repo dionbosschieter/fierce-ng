@@ -1,5 +1,11 @@
 # Fierce-NG
 
+You need to have `dnspython3`
+
+You can install it with: `pip3 install dnspython3` 
+or
+`pip install dnspython3`
+
 ```bash
 Fierce-NG <dionbosschieter@gmail.com>
 Specify a hostname to check its subdomains on
