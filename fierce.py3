@@ -38,4 +38,12 @@ handler = open('hosts.txt', 'r')
 # todo: handle ctrl-c
 for line in handler:
     subdomain = line.strip()
-    query(subdomain + '.' + host_to_attack)
+    try:
+        query(subdomain + '.' + host_to_attack)
+    except dns.resolver.NoAnswer:
+        print('[E] NoAnswer exception handled while querying for ', subdomain + '.' + host_to_attack)
+    except KeyboardInterrupt:
+        print('Caught keyboard interrupt')
+        break
+
+handler.close()
