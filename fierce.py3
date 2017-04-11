@@ -35,7 +35,6 @@ def query(hostname):
 handler = open('hosts.txt', 'r')
 
 # todo: use multithreading to speedup total process
-# todo: handle ctrl-c
 for line in handler:
     subdomain = line.strip()
     try:
