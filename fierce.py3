@@ -16,6 +16,7 @@ Todo:
 Example""", sys.argv[0], "dionbosschieter.nl 8.8.8.8")
     exit()
 
+debug = False
 resolver = dns.resolver.Resolver()
 resolver.nameservers = [sys.argv[2]]
 print('[*] using nameserver', resolver.nameservers)
@@ -28,9 +29,12 @@ def query(hostname):
         for host in data:
             print('[*] Host ', hostname, 'found', host, 'has settings')
     except dns.resolver.NXDOMAIN:
-        print('[*] No match for', hostname)
+        if debug == True:
+            print('[ ] No match for', hostname)
     except dns.resolver.NoNameservers:
         print('[*] Weird domain??', hostname)
+    except dns.resolver.Timeout:
+        print('[*] timeout while querying', hostname)
 
 handler = open('hosts.txt', 'r')
 
@@ -38,6 +42,7 @@ handler = open('hosts.txt', 'r')
 for line in handler:
     subdomain = line.strip()
     try:
+        print('[ ] checking on ', subdomain + '.' + host_to_attack, '\t\t\r', end='')
         query(subdomain + '.' + host_to_attack)
     except dns.resolver.NoAnswer:
         print('[E] NoAnswer exception handled while querying for ', subdomain + '.' + host_to_attack)
